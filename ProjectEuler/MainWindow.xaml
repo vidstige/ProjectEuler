@@ -1,0 +1,18 @@
+﻿<Window x:Class="ProjectEuler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ProjectEuler="clr-namespace:ProjectEuler"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <ListBox ItemsSource="{Binding ProblemSolvers}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type ProjectEuler:ProblemViewModel}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding ProblemNumber}" />
+                        <Button Command="{Binding SolveProblem}">Solve</Button>
+                        <TextBlock Text="{Binding Answer}" Background="BurlyWood" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
