@@ -9,7 +9,7 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding ProblemNumber}" />
                         <Button Command="{Binding SolveProblem}">Solve</Button>
-                        <TextBlock Text="{Binding Answer}" Background="BurlyWood" />
+                        <TextBox IsReadOnly="True" Text="{Binding Answer}" Background="BurlyWood" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
