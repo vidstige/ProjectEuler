@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 
 namespace ProjectEuler.Problems
 {
-    public class Problem11: ISolvable
+    public class Problem11 : ISolvable
     {
-        private string _rawGrid = 
-@"08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
+        private const string RawGrid = @"08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
 81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65
 52 70 95 23 04 60 11 42 69 24 68 56 01 32 56 71 37 02 36 91
@@ -28,25 +26,23 @@ namespace ProjectEuler.Problems
 20 69 36 41 72 30 23 88 34 62 99 69 82 67 59 85 74 04 36 16
 20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48";
-        
-        public int ProblemNumber { get { return 11; } }
+
+        public int ProblemNumber
+        {
+            get { return 11; }
+        }
 
         private long _max = 0;
         private int _total = 0;
 
-        private struct Coordinate
-        {
-            public int X;
-            public int Y;
-        }
+        private readonly bool[,] _visited = new bool[20,20];
 
-        //private Dictionary<string, long> _visited = new Dictionary<string, long>();
-        private void Search(int[,] grid, int n, int x, int y, long accu, List<int> numbers, List<Coordinate> visited)
+        private void Search(int[,] grid, int n, int x, int y, long accu, List<int> numbers)
         {
             if (x < 0 || x >= 20) return;
             if (y < 0 || y >= 20) return;
+            if (_visited[x, y]) return;
             
-
             if (n == 0)
             {
                 numbers.Add(grid[x, y]);
@@ -59,19 +55,20 @@ namespace ProjectEuler.Problems
                 return;
             }
 
+            _visited[x, y] = true;
             numbers.Add(grid[x, y]);
             
-            Search(grid, n - 1, x - 1, y, accu * grid[x, y], numbers.ToList(), visited);
-            Search(grid, n - 1, x + 1, y, accu * grid[x, y], numbers.ToList(), visited);
+            Search(grid, n - 1, x - 1, y, accu * grid[x, y], numbers.ToList());
+            Search(grid, n - 1, x + 1, y, accu * grid[x, y], numbers.ToList());
 
-            Search(grid, n - 1, x, y - 1, accu * grid[x, y], numbers.ToList(), visited);
-            Search(grid, n - 1, x, y + 1, accu * grid[x, y], numbers.ToList(), visited);
+            Search(grid, n - 1, x, y - 1, accu * grid[x, y], numbers.ToList());
+            Search(grid, n - 1, x, y + 1, accu * grid[x, y], numbers.ToList());
 
-            Search(grid, n - 1, x - 1, y - 1, accu * grid[x, y], numbers.ToList(), visited);
-            Search(grid, n - 1, x - 1, y + 1, accu * grid[x, y], numbers.ToList(), visited);
+            Search(grid, n - 1, x - 1, y - 1, accu * grid[x, y], numbers.ToList());
+            Search(grid, n - 1, x - 1, y + 1, accu * grid[x, y], numbers.ToList());
 
-            Search(grid, n - 1, x + 1, y - 1, accu * grid[x, y], numbers.ToList(), visited);
-            Search(grid, n - 1, x + 1, y + 1, accu * grid[x, y], numbers.ToList(), visited);
+            Search(grid, n - 1, x + 1, y - 1, accu * grid[x, y], numbers.ToList());
+            Search(grid, n - 1, x + 1, y + 1, accu * grid[x, y], numbers.ToList());
         }
 
         private int Multiply(int arg1, int arg2) { return arg1*arg2; }
@@ -85,7 +82,8 @@ namespace ProjectEuler.Problems
             {
                 for (int j = 0; j < 20; j++)
                 {
-                    Console.Write(grid[j,i] + "  ");
+                    //Console.Write(grid[j,i] + "  ");
+                    for(int x=0;x<20;x++) for (int y=0;y<20;y++) _visited[x, y] = false;
                     Search(grid, 3, j, i, 1, new List<int>());
                 }
                 Console.WriteLine();
@@ -100,7 +98,7 @@ namespace ProjectEuler.Problems
         {
             var grid = new int[20,20];
             int row = 0;
-            foreach (var line in _rawGrid.Split("\n".ToCharArray()))
+            foreach (var line in RawGrid.Split("\n".ToCharArray()))
             {
                 int column = 0;
                 foreach (var cell in line.Split(" ".ToCharArray()))
