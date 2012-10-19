@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace ProjectEuler.Problems
 {
@@ -23,12 +24,7 @@ namespace ProjectEuler.Problems
 
         private int FactorsOf(int n)
         {
-            int result = 0;
-            for (int i=2; i < Math.Sqrt(n); i++)
-            {
-                if (n % i == 0) result+=2;
-            }
-            return result;
+            return Algorithms.FactorsOf(n).Count();
         }
     }
 }
