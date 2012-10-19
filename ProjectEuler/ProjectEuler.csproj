@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -70,6 +71,8 @@
   <ItemGroup>
     <Compile Include="ISolvable.cs" />
     <Compile Include="Problems\Problem11.cs" />
+    <Compile Include="Problems\Problem12.cs" />
+    <Compile Include="Problems\Problem13.cs" />
     <Compile Include="ProblemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
