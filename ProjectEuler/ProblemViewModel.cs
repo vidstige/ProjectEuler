@@ -19,7 +19,11 @@ namespace ProjectEuler
             _solveProblemCommand = new SolveProblemCommand(this, dispatcher);
         }
 
-        public int ProblemNumber { get { return _solvable.ProblemNumber; } }
+        public string ProblemNumber
+        {
+            get { return string.Format("Problem {0}", _solvable.ProblemNumber); }
+        }
+
         public ICommand SolveProblem
         {
             get { return _solveProblemCommand; }

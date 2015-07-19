@@ -6,11 +6,28 @@
         <ListBox ItemsSource="{Binding ProblemSolvers}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type ProjectEuler:ProblemViewModel}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding ProblemNumber}" />
-                        <Button Command="{Binding SolveProblem}">Solve</Button>
-                        <TextBox IsReadOnly="True" Text="{Binding Answer}" />
-                    </StackPanel>
+                    <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Margin" Value="8, 2" />
+                            </Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Margin" Value="8, 2" />
+                            </Style>
+                            <Style TargetType="{x:Type TextBox}">
+                                <Setter Property="Margin" Value="8, 2" />
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="{Binding ProblemNumber}" />
+                        <Button Grid.Column="1" Command="{Binding SolveProblem}">Solve</Button>
+                        <TextBox Grid.Column="2" IsReadOnly="True" Text="{Binding Answer}" HorizontalAlignment="Stretch" />
+                        </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
