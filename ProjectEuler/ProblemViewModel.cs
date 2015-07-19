@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Threading;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using ProjectEuler.Problems;
@@ -12,6 +13,7 @@ namespace ProjectEuler
         private readonly ISolvable _solvable;
         private readonly ICommand _solveProblemCommand;
         private string _answer;
+        private Visibility _runningVisible = Visibility.Hidden;
 
         public ProblemViewModel(ISolvable solvable, Dispatcher dispatcher)
         {
@@ -47,6 +49,7 @@ namespace ProjectEuler
 
             public void Execute(object parameter)
             {
+                _problemViewModel.RunningVisible = Visibility.Visible;
                 ThreadPool.QueueUserWorkItem(x =>
                     {
                         var answer = _problemViewModel._solvable.Solve();
@@ -54,6 +57,8 @@ namespace ProjectEuler
                         _disptacher.Invoke(() =>
                         {
                             _problemViewModel.Answer = answer;
+
+                            _problemViewModel.RunningVisible = Visibility.Hidden;
 
                             var tmp = CanExecuteChanged;
                             if (tmp != null) tmp(this, EventArgs.Empty);
@@ -72,6 +77,12 @@ namespace ProjectEuler
                 _answer = value;
                 OnPropertyChanged("Answer");
             }
+        }
+
+        public Visibility RunningVisible
+        {
+            get { return _runningVisible; }
+            private set { _runningVisible = value; OnPropertyChanged("RunningVisible"); }
         }
 
         protected bool IsSolved

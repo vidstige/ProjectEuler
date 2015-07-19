@@ -2,34 +2,40 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ProjectEuler="clr-namespace:ProjectEuler"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <ListBox ItemsSource="{Binding ProblemSolvers}">
-            <ListBox.ItemTemplate>
-                <DataTemplate DataType="{x:Type ProjectEuler:ProblemViewModel}">
-                    <Grid>
-                        <Grid.Resources>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Margin" Value="8, 2" />
-                            </Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Margin" Value="8, 2" />
-                            </Style>
-                            <Style TargetType="{x:Type TextBox}">
-                                <Setter Property="Margin" Value="8, 2" />
-                            </Style>
-                        </Grid.Resources>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+    <ListBox ItemsSource="{Binding ProblemSolvers}">
+        <ListBox.ItemContainerStyle>
+            <Style TargetType="ListBoxItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            </Style>
+        </ListBox.ItemContainerStyle>
+        <ListBox.ItemTemplate>
+            <DataTemplate DataType="{x:Type ProjectEuler:ProblemViewModel}">
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Margin" Value="8, 2" />
+                        </Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Margin" Value="8, 2" />
+                            <Setter Property="Padding" Value="4, 0" />
+                        </Style>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="Margin" Value="8, 2" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="{Binding ProblemNumber}" />
-                        <Button Grid.Column="1" Command="{Binding SolveProblem}">Solve</Button>
-                        <TextBox Grid.Column="2" IsReadOnly="True" Text="{Binding Answer}" HorizontalAlignment="Stretch" />
-                        </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </Grid>
+                    <TextBlock Grid.Column="0" Text="{Binding ProblemNumber}" />
+                    <Button Grid.Column="1" Command="{Binding SolveProblem}">Solve</Button>
+                    <TextBox Grid.Column="2" IsReadOnly="True" Text="{Binding Answer}" HorizontalAlignment="Stretch" />
+                    <ProgressBar Grid.Column="3" Visibility="{Binding RunningVisible}" IsIndeterminate="True" IsEnabled="True" />
+                </Grid>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
 </Window>
