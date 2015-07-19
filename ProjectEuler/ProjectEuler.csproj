@@ -80,6 +80,7 @@
     <Compile Include="Problems\Problem23.cs" />
     <Compile Include="Problems\Problem26.cs" />
     <Compile Include="Problems\Problem27.cs" />
+    <Compile Include="Problems\Problem31.cs" />
     <Compile Include="ProblemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
