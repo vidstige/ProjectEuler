@@ -37,7 +37,7 @@ def sieve(n: int):
     p = 2
     while p*p < n:
         marks[2*p::p] = [False] * ((n-p) // p)
-        p = marks.index(True, p) + 1
+        p = marks.index(True, p+1)
 
     return list(itertools.compress(range(len(marks)), marks))
 
