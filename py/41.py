@@ -1,5 +1,5 @@
 from itertools import permutations
-from primes import Prime
+from prime import Prime
 
 def iter_pandigitals():
     for n in range(2, 9+1):

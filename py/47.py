@@ -1,5 +1,5 @@
 from itertools import count, islice
-import primes
+import prime
 
 def window(seq, n):
     "Returns a sliding window (of width n) over data from the iterable"
