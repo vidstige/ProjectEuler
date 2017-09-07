@@ -1,12 +1,4 @@
 import prime
-import bisect
-
-def bisect_in(a, x):
-    'Determine if x is in a'
-    i = bisect.bisect_left(a, x)
-    if i != len(a) and a[i] == x:
-        return True
-    return False
 
 def consecutive_sum_primes(n):
     primes = prime.sieve(n)
@@ -16,8 +8,7 @@ def consecutive_sum_primes(n):
         while s < n and c < len(primes):
             s += primes[c]
             c += 1
-            #if s in primes:
-            if bisect_in(primes, s):
+            if s in primes:
                 yield (s, c - i)
 
 

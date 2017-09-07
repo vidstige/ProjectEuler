@@ -1,4 +1,6 @@
+"""Samuels prime number tools"""
 import itertools
+import bisect
 
 def is_prime(n: int):
     if n <= 1:
@@ -10,23 +12,10 @@ def is_prime(n: int):
     return True
 
 
-class Prime(object):
-    def __init__(self):
-        self.primes = [2]
-
-    def is_prime(self, n: int):
-        if n == 1:
-            return False
-        for i in range(2, int(n**0.5) + 1):
-            if n % i==0:
-                return False
-
-        return True
-
-    def iter(self):
-        for i in itertools.count():
-            if self.is_prime(i):
-                yield i
+class PrimeList(list):
+    def __contains__(self, x):
+        i = bisect.bisect_left(self, x)
+        return i != len(self) and self[i] == x
 
 
 def sieve(n: int):
@@ -39,7 +28,7 @@ def sieve(n: int):
         marks[2*p::p] = [False] * ((n-p) // p)
         p = marks.index(True, p+1)
 
-    return list(itertools.compress(range(len(marks)), marks))
+    return PrimeList(itertools.compress(range(len(marks)), marks))
 
 
 def factors(n, primes=None):
