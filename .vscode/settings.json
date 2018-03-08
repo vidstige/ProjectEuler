@@ -1,4 +1,4 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "python.pythonPath": "venv/bin/python3"
+    "python.pythonPath": "/opt/local/bin/python"
 }
