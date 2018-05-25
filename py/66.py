@@ -1,4 +1,4 @@
-from itertools import count, cycle
+from itertools import count, combinations, cycle, islice, permutations, product
 
 # Called PELL EQUATION
 
@@ -45,8 +45,29 @@ def is_square(integer):
     return int(root + 0.5) ** 2 == integer
 
 
-def chakravala():
-    pass
+def find_m(a, b, k, D):
+    for m in count(int(math.sqrt(D))):
+        if (a + b*m) % k == 0:
+            return m
+
+
+def substitute(a, b, k, D, m):
+    return (a*m + D*b) // abs(k), (a + b*m) // abs(k), (m*m - D) // k
+
+
+def initial(D):
+    a = 1
+    b = 1
+    k = a*a - D * b * b
+    return a, b, k
+
+
+def chakravala(D):
+    a, b, k = initial(D)
+    while k != 1:
+        m = find_m(a, b, k, D)
+        a, b, k = substitute(a, b, k, D, m)
+    return a, b, k
 
 
 def diophantine_slow(D):
@@ -63,17 +84,19 @@ def diophantine_slow(D):
 def all_solutions_for_D_up_to(n):
     for D in range(2, n+1):
         if not is_square(D):
-            solution = next(diophantine_slow(D))
-            print(solution)
-            yield solution
+            x, y, k = chakravala(D)
+            #print(x, y)
+            yield D, x, y
+
 
 def main():
     def x(solution):
         _, x, _ = solution
         return x
 
+    #print(chakravala(61))
     #n = 7
-    n = 60
+    n = 1000
     D, x, y = max(all_solutions_for_D_up_to(n=n), key=x)
     print("D: {}, x: {}".format(D, x))
 
