@@ -1,5 +1,7 @@
 import bisect
 import itertools
+import math
+
 
 class Memoize:
     def __init__(self, f):
@@ -23,8 +25,10 @@ def is_prime(n: int):
 
 class Prime(object):
     def __init__(self):
-        self.primes = [False, False]
+        self._primes = None
         self.limit = 2
+
+        self.counter = 0
 
     def sieve(self, limit):
         # Initialize the primality list
@@ -40,10 +44,28 @@ class Prime(object):
         self.limit = limit
 
     def is_prime(self, n):
-        return self.cache[n]
+        if n < len(self.cache):
+            return self.cache[n]
         
+        self.counter += 1
+        primes = self.primes()
+        sqrtn = math.sqrt(n)
+        if sqrtn < primes[-1]:
+            for p in primes:
+                if n % p == 0:
+                    return False
+                if p > sqrtn:
+                    break
+            return True
+
+        raise Exception("Cannot determine primeness of {n}".format(n=n))
 
     def iter(self):
         for i in itertools.count():
             if self.is_prime(i):
                 yield i
+
+    def primes(self):
+        if self._primes is None:
+            self._primes = [i for i, b in enumerate(self.cache) if b]
+        return self._primes
