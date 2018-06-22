@@ -69,3 +69,11 @@ class Prime(object):
         if self._primes is None:
             self._primes = [i for i, b in enumerate(self.cache) if b]
         return self._primes
+
+    def factor(self, n):
+        idx = 0
+        ps = self.primes()
+        while n > 1:
+            idx = next(i for i in itertools.count(idx) if n % ps[i] == 0)
+            yield ps[idx]
+            n //= ps[idx]
